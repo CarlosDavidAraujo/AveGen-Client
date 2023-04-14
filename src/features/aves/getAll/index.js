@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { useAxios } from "../../hooks/useAxios";
+import { useAxios } from "../../../hooks/useAxios";
 
-export default function Home() {
+export default function Aves() {
   const { response, error, isLoading } = useAxios({
     method: 'GET',
     url: '/aves'
@@ -22,5 +22,4 @@ export default function Home() {
       }
     </>
   );
-} 
-
+}
