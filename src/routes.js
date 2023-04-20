@@ -6,17 +6,13 @@ import { Ninhada } from "./features/ninhada/getOne";
 import { AveForm } from "./features/aves/create";
 import Ave from "./features/aves/getOne";
 import { Especie } from "./features/especie/create";
-import Aves from "./features/aves/getAll";
+//import Aves from "./features/aves/getAll";
 import { Casais } from "./features/casal/getAll";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Home/>
-  },
-  {
-    path: '/aves',
-    element: <Aves/>
   },
   {
     path: '/aves/:id',

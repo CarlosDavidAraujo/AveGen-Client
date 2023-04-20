@@ -1,39 +1,66 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Sketchy } from "../borders/sketchy";
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/themeContext";
 
 export function CasalCard({ casal, link }) {
+  const theme = useContext(ThemeContext);
+
   return (
-    <Container to={link}>
-      <Square color="#7FB685">
-        <h5>Macho</h5>
-        <h6>{casal.macho.anilha}</h6>
-      </Square>
-      <Square color="#FFC0CB ">
-        <h5>Fêmea</h5>
-        <h6>{casal.femea.anilha}</h6>
-      </Square>
-    </Container>
+    <Sketchy
+      padding={"10px 20px"}
+      colors={theme.colors.secondary}
+      options={{
+        fillStyle: "solid",
+      }}
+    >
+      <Content to={link}>
+        <BirdParentContainer>
+          <h5>Macho</h5>
+          <Sketchy
+            options={{
+              stroke: "black",
+              fill: "white",
+              fillStyle: "solid",
+            }}
+          >
+            <Image />
+          </Sketchy>
+          <h6>{casal.macho.anilha}</h6>
+        </BirdParentContainer>
+        <BirdParentContainer>
+          <h5>Fêmea</h5>
+          <Sketchy
+            options={{
+              stroke: "black",
+              fill: "white",
+              fillStyle: "solid",
+            }}
+          >
+            <Image />
+          </Sketchy>
+          <h6>{casal.femea.anilha}</h6>
+        </BirdParentContainer>
+      </Content>
+    </Sketchy>
   );
 }
 
-const Container = styled(Link)`
-  width: max-content;
+const Content = styled(Link)`
   display: flex;
-  gap: 0.5em;
-  padding: 0.5em;
-  border-radius: 0.2em;
-  align-items: center;
   justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  gap: 1em;
+  font-size: 1.4rem;
 `;
 
-const Square = styled.div`
+const Image = styled.div`
+  width: 4em;
+  height: 4em;
+`;
+
+const BirdParentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  width: 5em;
-  aspect-ratio: 2/1;
-  border-radius: 0.2em;
-  background-color: ${(props) => props.color};
 `;

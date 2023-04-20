@@ -1,3 +1,5 @@
+import { ThemeProvider } from "./contexts/themeContext";
+
 function App() {
   return (
     <div className="App">

@@ -1,42 +1,62 @@
 import { Link, useParams } from "react-router-dom";
 import { useAxios } from "../../../hooks/useAxios";
 
+import styled from "styled-components";
+import { RelatedCouples } from "./components/relatedCouples";
+import { BirdInfo } from "./components/birdInfo";
+import { NavBar } from "../../../components/navbars/navbar";
+import { Sketchy } from "../../../components/borders/sketchy";
+import { azulmelo } from "../../../theme/azumelo";
+import { verdox } from "../../../theme/verdox";
+import { ThemeProvider } from "../../../contexts/themeContext";
+
 export default function Ave() {
   const { id } = useParams();
   const { response, error, isLoading } = useAxios({
-    method: 'GET',
-    url: `/aves/${id}`
+    method: "GET",
+    url: `/aves/${id}`,
   });
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div>Error: {error.message}</div>;
   }
-
   console.log(response);
-
   return (
-    <div>
-      <h2>Ave: {response.ave.id}</h2>
-      <h3>Espécie: {response.ave.especieId}</h3>
-      <h3>Sexo: {response.ave.sexo}</h3>
-      <h3>N° da anilha: {response.ave.anilha? response.ave.anilha : 'cadastro de anilha pendente'}</h3>
-      <Link>
-        Casal de origem: {response.casal_de_origem}</Link>
-      <Link>Ninhada de origem: {response.ninhada_de_origem}</Link>
-      <div>
-        <h2>Casais relacionados:</h2>
-        {response.casaisRelacionados.map((casal) =>
-          <Link to={`/casal/${casal.id}`}>
-            <h4>{casal.id}</h4>
-            <h5>Macho: {casal.macho_id}</h5>
-            <h5>Fêmea: {casal.femea_id}</h5>
-          </Link>
-        )}
-      </div>
-    </div>
+    <Container>
+      <Sketchy padding={"2em"}>
+        <NavBar>
+          <Link>Informações Gerais</Link>
+          <Link>Árvore genealógica</Link>
+          <Link>Estatísticas</Link>
+          <Link>Editar</Link>
+        </NavBar>
+        <Content>
+          <ThemeProvider theme={azulmelo}>
+            <BirdInfo ave={response.ave} />
+          </ThemeProvider>
+          <ThemeProvider theme={verdox}>
+            <RelatedCouples casaisRelacionados={response.casaisRelacionados} />
+          </ThemeProvider>
+        </Content>
+      </Sketchy>
+      <Sketchy />
+    </Container>
   );
 }
+
+const Container = styled.div`
+  width: min(90%, 1200px);
+  margin: 2em auto;
+  font-family: "Architects Daughter", cursive;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 2em;
+  margin-top: 2em;
+`;
